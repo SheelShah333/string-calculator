@@ -7,11 +7,15 @@ extern int add(const string&);
 int main() {
     assert(add("") == 0);  // Test empty string returns 0
     cout << "Test passed" << endl;
+
     assert(add("1") == 1);
     assert(add("42") == 42);
 
     assert(add("1,2") == 3);
     assert(add("4,5") == 9);
+
+    assert(add("1,2,3") == 6);
+    assert(add("10,20,30,40") == 100);
 
 
     return 0;
