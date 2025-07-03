@@ -10,5 +10,9 @@ int main() {
     assert(add("1") == 1);
     assert(add("42") == 42);
 
+    assert(add("1,2") == 3);
+    assert(add("4,5") == 9);
+
+
     return 0;
 }
