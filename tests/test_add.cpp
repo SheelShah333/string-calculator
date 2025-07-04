@@ -17,6 +17,10 @@ int main() {
     assert(add("1,2,3") == 6);
     assert(add("10,20,30,40") == 100);
 
+    assert(add("1\n2,3") == 6);
+    assert(add("4\n5\n6") == 15);
+
+
 
     return 0;
 }
