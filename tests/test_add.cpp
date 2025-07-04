@@ -20,6 +20,9 @@ int main() {
     assert(add("1\n2,3") == 6);
     assert(add("4\n5\n6") == 15);
 
+    assert(add("//;\n1;2") == 3);
+    assert(add("//#\n4#5#6") == 15);
+
 
 
     return 0;
