@@ -44,5 +44,8 @@ int main() {
     assert(add("//[***]\n1***2***3") == 6);
     assert(add("//[abc]\n4abc5abc6") == 15);
 
+    assert(add("//[*][%]\n1*2%3") == 6);
+    assert(add("//[***][#][%]\n1***2#3%4") == 10);
+
     return 0;
 }
