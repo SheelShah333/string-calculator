@@ -23,7 +23,19 @@ int main() {
     assert(add("//;\n1;2") == 3);
     assert(add("//#\n4#5#6") == 15);
 
+    try {
+    add("1,-2,3");
+    assert(false); // Should not reach here
+} catch (const exception& e) {
+    assert(string(e.what()) == "negative numbers not allowed -2");
+}
 
+try {
+    add("2,-4,-6");
+    assert(false); // Should not reach here
+} catch (const exception& e) {
+    assert(string(e.what()) == "negative numbers not allowed -4,-6");
+}
 
     return 0;
 }
