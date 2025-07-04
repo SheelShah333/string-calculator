@@ -30,12 +30,17 @@ int main() {
     assert(string(e.what()) == "negative numbers not allowed -2");
 }
 
-try {
+    try {
     add("2,-4,-6");
     assert(false); // Should not reach here
 } catch (const exception& e) {
     assert(string(e.what()) == "negative numbers not allowed -4,-6");
 }
+
+    assert(add("2,1001") == 2);
+    assert(add("1000,1") == 1001);
+    assert(add("1234,56,9999") == 56);
+
 
     return 0;
 }

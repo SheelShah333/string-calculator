@@ -32,12 +32,12 @@ int add(const string& input) {
     string token;
 
     while (getline(ss, token, ',')) {
-        if (!token.empty()) {
-            int num = stoi(token);
-            if (num < 0) negatives.push_back(num);
-            else sum += num;
-        }
+    if (!token.empty()) {
+        int num = stoi(token);
+        if (num < 0) negatives.push_back(num);
+        else if (num <= 1000) sum += num; 
     }
+}
 
     if (!negatives.empty()) {
         string msg = "negative numbers not allowed ";
