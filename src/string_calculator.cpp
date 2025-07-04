@@ -3,26 +3,41 @@
 #include <algorithm>
 #include <vector>
 #include <stdexcept>
+#include <regex>
 using namespace std;
 
 int add(const string& input) {
     if (input.empty()) return 0;
 
     string numbers = input;
-    string delimiter = ",\n";
+    vector<string> delimiters = {",", "\n"}; // default
 
-    // Custom delimiter check
+    // Check for custom delimiters
     if (numbers.rfind("//", 0) == 0) {
-        delimiter = numbers[2];
-        numbers = numbers.substr(4);
-    } else {
-        replace(numbers.begin(), numbers.end(), '\n', ',');
+        size_t newline_pos = numbers.find('\n');
+        string delimiter_section = numbers.substr(2, newline_pos - 2);
+
+        if (delimiter_section[0] == '[') {
+            // Support multiple delimiters like //[***][%]
+            regex re(R"(\[([^\]]+)\])");
+            smatch match;
+            string s = delimiter_section;
+            while (regex_search(s, match, re)) {
+                delimiters.push_back(match[1]);
+                s = match.suffix();
+            }
+        } else {
+            delimiters = {delimiter_section}; // single-char delimiter
+        }
+
+        numbers = numbers.substr(newline_pos + 1); // strip delimiter section
     }
 
-    // Normalize all delimiters to comma
-    for (char& ch : numbers) {
-        if (delimiter.find(ch) != string::npos) {
-            ch = ',';
+    // Replace all delimiters with comma
+    for (const string& delim : delimiters) {
+        size_t pos;
+        while ((pos = numbers.find(delim)) != string::npos) {
+            numbers.replace(pos, delim.length(), ",");
         }
     }
 
@@ -32,12 +47,12 @@ int add(const string& input) {
     string token;
 
     while (getline(ss, token, ',')) {
-    if (!token.empty()) {
-        int num = stoi(token);
-        if (num < 0) negatives.push_back(num);
-        else if (num <= 1000) sum += num; 
+        if (!token.empty()) {
+            int num = stoi(token);
+            if (num < 0) negatives.push_back(num);
+            else if (num <= 1000) sum += num;
+        }
     }
-}
 
     if (!negatives.empty()) {
         string msg = "negative numbers not allowed ";

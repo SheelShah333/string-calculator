@@ -41,6 +41,8 @@ int main() {
     assert(add("1000,1") == 1001);
     assert(add("1234,56,9999") == 56);
 
+    assert(add("//[***]\n1***2***3") == 6);
+    assert(add("//[abc]\n4abc5abc6") == 15);
 
     return 0;
 }
